@@ -1,6 +1,7 @@
-module Dialog exposing (view, model, Model)
+module Dialog exposing (view, model, update, Msg(..), Model)
 
 import Html exposing (Html)
+import Html.Events exposing (onClick)
 
 
 -- Model
@@ -16,11 +17,38 @@ model =
 
 
 
+-- Update
+
+
+type Msg
+    = Open
+    | Close
+
+
+update : Msg -> Model -> Model
+update msg model =
+    case msg of
+        Open ->
+            { model | open = True }
+
+        Close ->
+            { model | open = False }
+
+
+
 -- View
 
 
-view : Model -> Html msg
+view : Model -> Html Msg
 view model =
     Html.div []
-        [ Html.pre [] [ toString model |> Html.text ]
+        [ Html.button
+            [ onClick Close
+            ]
+            [ Html.text "Close from Dialog" ]
+        , Html.pre [] [ toString model |> Html.text ]
         ]
+
+
+main =
+    Html.beginnerProgram { model = model, view = view, update = update }
