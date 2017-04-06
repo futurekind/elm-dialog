@@ -3,6 +3,7 @@ module Main exposing (..)
 import Dialog
 import Html exposing (Html)
 import Html.Events exposing (onClick)
+import Html.Attributes exposing (style)
 
 
 -- Model
@@ -62,8 +63,19 @@ view model =
             ]
             [ Html.text "Open from Main" ]
         , Dialog.backdrop model.dialog CloseDialog
-        , Dialog.content model.dialog
+        , Dialog.content model.dialog dialogContent
         ]
+
+
+dialogContent : Html Msg
+dialogContent =
+    Html.div
+        [ style
+            [ ( "height", "800px" )
+            , ( "background", "#fff" )
+            ]
+        ]
+        [ Html.button [ onClick CloseDialog ] [ Html.text "Close" ] ]
 
 
 main : Program Never Model Msg

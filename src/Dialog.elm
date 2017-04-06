@@ -33,18 +33,20 @@ backdropStyles model =
             [ ( "position", "absolute" )
             , ( "background", "rgba(0, 0, 0, .5)" )
             , ( "top", "0" )
-            , ( "left", "-9999px" )
+            , ( "left", "0" )
             , ( "width", "100%" )
             , ( "height", "100%" )
+            , ( "pointer-events", "none" )
             , ( "opacity", "0" )
-            , ( "transition", "opacity .2s ease-out" )
+            , ( "transition", "opacity .2s .2s ease-in" )
             ]
 
         additionalStyle =
             if model.open == True then
                 [ ( "position", "fixed" )
-                , ( "left", "0" )
+                , ( "pointer-events", "all" )
                 , ( "opacity", "1" )
+                , ( "transition", "opacity .2s ease-out" )
                 ]
             else
                 []
@@ -52,9 +54,9 @@ backdropStyles model =
         style (basicStyle ++ additionalStyle)
 
 
-content : Model -> Html msg
-content model =
-    Html.div [ contentStyle model ] []
+content : Model -> Html msg -> Html msg
+content model children =
+    Html.div [ contentStyle model ] [ children ]
 
 
 contentStyle : Model -> Html.Attribute msg
@@ -65,16 +67,15 @@ contentStyle model =
             , ( "top", "0" )
             , ( "left", "50%" )
             , ( "width", "800px" )
-            , ( "height", "400px" )
             , ( "margin-left", "-400px" )
-            , ( "background-color", "#fff" )
             , ( "transform", "translateY(-100%)" )
-            , ( "transition", "transform .2s .1s" )
+            , ( "transition", "transform .2s ease-in" )
             ]
 
         additionalStyle =
             if model.open == True then
                 [ ( "transform", "translateY(50px)" )
+                , ( "transition", "transform .2s .1s ease-out" )
                 ]
             else
                 []
