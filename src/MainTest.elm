@@ -14,7 +14,7 @@ type alias Model =
 
 model : Model
 model =
-    { dialog = Dialog.model }
+    { dialog = Dialog.init }
 
 
 
@@ -23,6 +23,7 @@ model =
 
 type Msg
     = OpenDialog
+    | CloseDialog
 
 
 update : Msg -> Model -> Model
@@ -30,10 +31,23 @@ update msg model =
     case msg of
         OpenDialog ->
             let
-                foo =
-                    Dialog.update Dialog.Open Dialog.model
+                dialog =
+                    model.dialog
+
+                newDialog =
+                    { dialog | open = True }
             in
-                { model | dialog = foo }
+                { model | dialog = newDialog }
+
+        CloseDialog ->
+            let
+                dialog =
+                    model.dialog
+
+                newDialog =
+                    { dialog | open = False }
+            in
+                { model | dialog = newDialog }
 
 
 
@@ -47,7 +61,7 @@ view model =
             [ onClick OpenDialog
             ]
             [ Html.text "Open from Main" ]
-        , Dialog.view model.dialog
+        , Dialog.backdrop model.dialog CloseDialog
         ]
 
 
