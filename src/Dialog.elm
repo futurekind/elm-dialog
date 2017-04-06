@@ -50,3 +50,33 @@ backdropStyles model =
                 []
     in
         style (basicStyle ++ additionalStyle)
+
+
+content : Model -> Html msg
+content model =
+    Html.div [ contentStyle model ] []
+
+
+contentStyle : Model -> Html.Attribute msg
+contentStyle model =
+    let
+        basicStyle =
+            [ ( "position", "fixed" )
+            , ( "top", "0" )
+            , ( "left", "50%" )
+            , ( "width", "800px" )
+            , ( "height", "400px" )
+            , ( "margin-left", "-400px" )
+            , ( "background-color", "#fff" )
+            , ( "transform", "translateY(-100%)" )
+            , ( "transition", "transform .2s .1s" )
+            ]
+
+        additionalStyle =
+            if model.open == True then
+                [ ( "transform", "translateY(50px)" )
+                ]
+            else
+                []
+    in
+        style (basicStyle ++ additionalStyle)

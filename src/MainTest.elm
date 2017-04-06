@@ -62,6 +62,7 @@ view model =
             ]
             [ Html.text "Open from Main" ]
         , Dialog.backdrop model.dialog CloseDialog
+        , Dialog.content model.dialog
         ]
 
 
